@@ -1,54 +1,46 @@
-// Load up the discord.js library
+// Laden der discord.js library
 const Discord = require("discord.js");
 
-// This is your client. Some people call it `bot`, some people call it `self`, 
-// some might call it `cootchie`. Either way, when you see `client.something`, or `bot.something`,
-// this is what we're refering to. Your client.
+// Generieren des Clients
 const client = new Discord.Client();
 
-// Here we load the config.json file that contains our token and our prefix values. 
+// Laden der config.json Datei, die das Token und den Prefix beinhaltet
 const config = require("./config.json");
-// config.token contains the bot's token
-// config.prefix contains the message prefix.
+// config.token beinhaltet das Token
+// config.prefix beinhaltet den Prefix
 
 client.on("ready", () => {
-  // This event will run if the bot starts, and logs in, successfully.
+  // Event, das startet, wenn der Bot sich erfolgreich eingeloggt hat
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`); 
-  // Example of changing the bot's playing game to something useful. `client.user` is what the
-  // docs refer to as the "ClientUser".
+  // Konsolenausgabe
   client.user.setActivity(`Serving ${client.guilds.size} servers`);
+  // Ändern des angezeigten Statuses
 });
 
 client.on("guildCreate", guild => {
-  // This event triggers when the bot joins a guild.
+  // Event, wenn der Bot einem neuen Server hinzugefügt wird
   console.log(`New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
   client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
 
 client.on("guildDelete", guild => {
-  // this event triggers when the bot is removed from a guild.
+  // Event, wenn der Bot von einem Server entfernt wird
   console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`);
   client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
 
 
 client.on("message", async message => {
-  // This event will run on every single message received, from any channel or DM.
-  
-  // It's good practice to ignore other bots. This also makes your bot ignore itself
-  // and not get into a spam loop (we call that "botception").
+  // Event, wenn eien Nachricht gesendet wird, auf die der Bot zugriff hat
   if(message.author.bot) return;
-  
-  // Also good practice to ignore any message that does not start with our prefix, 
-  // which is set in the configuration file.
+  // Bewirkt, dass der Bot nicht auf andere Bots antwortet (=> Verhindert Botception)
+
   if(message.content.indexOf(config.prefix) !== 0) return;
-  
-  // Here we separate our "command" name, and our "arguments" for the command. 
-  // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
-  // command = say
-  // args = ["Is", "this", "the", "real", "life?"]
+  // Ignoriert alle Nachrichten, die nicht mit dem Prefix beginnen
+
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
+  // Separiert den Befehl in Command und Argumente
   
   // Let's go with a few common example commands! Feel free to delete or change those.
   
