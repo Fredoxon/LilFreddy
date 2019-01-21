@@ -34,15 +34,12 @@ client.on("message", async message => {
   // Event, wenn eien Nachricht gesendet wird, auf die der Bot zugriff hat
   if(message.author.bot) return;
   // Bewirkt, dass der Bot nicht auf andere Bots antwortet (=> Verhindert Botception)
-
   if(message.content.indexOf(config.prefix) !== 0) return;
   // Ignoriert alle Nachrichten, die nicht mit dem Prefix beginnen
 
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   // Separiert den Befehl in Command und Argumente
-  
-  // Let's go with a few common example commands! Feel free to delete or change those.
   
   if(command === "ping") {
     // Calculates ping between sending a message and editing it, giving a nice round-trip latency.
