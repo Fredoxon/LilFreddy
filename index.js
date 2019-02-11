@@ -31,9 +31,13 @@ client.on("guildDelete", guild => {
 
 
 client.on("message", async message => {
-  // Event, wenn eien Nachricht gesendet wird, auf die der Bot zugriff hat
+  // Event, wenn eien Nachricht gesendet wird, auf die der Bot Zugriff hat
   if(message.author.bot) return;
   // Bewirkt, dass der Bot nicht auf andere Bots antwortet (=> Verhindert Botception)
+
+  const xpGain = Math.floor(Math.random() * 11) + 15;
+  message.reply(xpGain);
+
   if(message.content.indexOf(config.prefix) !== 0) return;
   // Ignoriert alle Nachrichten, die nicht mit dem Prefix beginnen
 
