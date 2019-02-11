@@ -35,8 +35,12 @@ client.on("message", async message => {
   if(message.author.bot) return;
   // Bewirkt, dass der Bot nicht auf andere Bots antwortet (=> Verhindert Botception)
 
-  const xpGain = Math.floor(Math.random() * 11) + 15;
-  message.reply(xpGain);
+  const xpRangeStart = 50
+  const xpRange = 25
+  // Anfang und Länge des Erfahrungszuweisungsbetrags
+  const xpGain = Math.floor(Math.random() * (xpRange + 1)) + xpRangeStart;
+  // Willkür des tatsächlichen Erfahrungszuweisungsbetrags
+  //message.reply(xpGain);
 
   if(message.content.indexOf(config.prefix) !== 0) return;
   // Ignoriert alle Nachrichten, die nicht mit dem Prefix beginnen
@@ -52,6 +56,12 @@ client.on("message", async message => {
     m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
   }
   
+  if(command === "xpgain") {
+    xpRangeStart = args[0];
+    xpRange = args[1] - args[0];
+    message.reply("" + xpRange + xpRangeStart);
+  }
+
   if(command === "say") {
     // makes the bot say something and delete the message. As an example, it's open to anyone to use. 
     // To get the "message" itself we join the `args` back into a string with spaces: 
