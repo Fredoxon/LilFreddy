@@ -29,18 +29,19 @@ client.on("guildDelete", guild => {
   client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
 
+xpRangeStart = 50
+xpRange = 25
+// Anfang und Länge des Erfahrungszuweisungsbetrags
 
 client.on("message", async message => {
-  // Event, wenn eien Nachricht gesendet wird, auf die der Bot Zugriff hat
+  // Event, wenn eine Nachricht gesendet wird, auf die der Bot Zugriff hat
   if(message.author.bot) return;
   // Bewirkt, dass der Bot nicht auf andere Bots antwortet (=> Verhindert Botception)
 
-  const xpRangeStart = 50
-  const xpRange = 25
-  // Anfang und Länge des Erfahrungszuweisungsbetrags
-  const xpGain = Math.floor(Math.random() * (xpRange + 1)) + xpRangeStart;
+  xpGain = Math.floor(Math.random() * (xpRange + 1)) + xpRangeStart;
+  console.log(`${xpGain} ${xpRange} ${xpRangeStart} \n`)
   // Willkür des tatsächlichen Erfahrungszuweisungsbetrags
-  //message.reply(xpGain);
+  message.reply(xpGain);
 
   if(message.content.indexOf(config.prefix) !== 0) return;
   // Ignoriert alle Nachrichten, die nicht mit dem Prefix beginnen
@@ -48,7 +49,8 @@ client.on("message", async message => {
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   // Separiert den Befehl in Command und Argumente
-  
+  console.log(`${args.length}`);
+
   if(command === "ping") {
     // Calculates ping between sending a message and editing it, giving a nice round-trip latency.
     // The second ping is an average latency between the bot and the websocket server (one-way, not round-trip)
@@ -59,7 +61,9 @@ client.on("message", async message => {
   if(command === "xpgain") {
     xpRangeStart = args[0];
     xpRange = args[1] - args[0];
-    message.reply("" + xpRange + xpRangeStart);
+    xpEnd = xpRange + xpRangeStart;
+    console.log(`${xpRangeStart} ${xpRange} ${xpEnd}`);
+    message.reply(`Experience Range set from ${xpRangeStart} to ${xpEnd}`);
   }
 
   if(command === "say") {
