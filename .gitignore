@@ -66,3 +66,8 @@ node_modules/winston/
 node_modules/ws/
 
 config\.json
+node_modules/bignumber\.js/
+
+node_modules/mysql/
+
+node_modules/sqlstring/
