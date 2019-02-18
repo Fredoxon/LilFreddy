@@ -64,3 +64,5 @@ node_modules/winston-transport/
 node_modules/winston/
 
 node_modules/ws/
+
+config\.json
