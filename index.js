@@ -16,8 +16,8 @@ const connection = mysql.createConnection({
   user     : config.user,
   password : config.password,
   database : 'phpMyAdmin',
-  charset  : 'utf8mb4'
-}); 
+  charset : 'utf8mb4'
+});
 
 client.on("ready", () => {
   // Event, das startet, wenn der Bot sich erfolgreich eingeloggt hat
@@ -49,11 +49,12 @@ client.on("message", async message => {
   // Bewirkt, dass der Bot nicht auf andere Bots antwortet (=> Verhindert Botception)
 
   xpGain = Math.floor(Math.random() * (xpRange + 1)) + parseInt(xpRangeStart, 10);
-  console.log(`${xpGain} ${xpRange} ${xpRangeStart} \n`)
+  console.log(`${xpGain} ${xpRange} ${xpRangeStart}`)
   // Willkür des tatsächlichen Erfahrungszuweisungsbetrags
-  message.reply(xpGain);
+  //message.reply(xpGain);
+  mysql.Members.
 
-  if(message.content.indexOf(config.prefix) !== 0) return;
+  if(!message.content.startsWith(config.prefix)) return;
   // Ignoriert alle Nachrichten, die nicht mit dem Prefix beginnen
 
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
