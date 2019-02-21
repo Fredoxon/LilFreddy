@@ -17,7 +17,7 @@ const connection = mysql.createConnection({
   password : config.password,
   database : 'phpMyAdmin',
   charset : 'utf8mb4'
-});
+}); // MySQL-Verbindungsdaten
 
 client.on("ready", () => {
   // Event, das startet, wenn der Bot sich erfolgreich eingeloggt hat
@@ -99,32 +99,32 @@ client.on("message", async message => {
 
   if(command === "role") {
     var person;
-    if(args[0] === "add") {
+    if(args[0] === "add") { // Unterbefehl zum Rollen hinzufügen
       const role = message.guild.roles.find('name', `${args[3]}`);
       console.log(args);
       person = message.mentions.members.first();
       person.addRole(role);
     } else {
-      if(args[0]) {  
-        person = message.mentions.members.first();
-        message.channel.send(person);
-      } else {
-        person = message.member;
+      if(args[0]) { // Wenn dem Befehl etwas hinzugefügt wurde, das keinem Unterbefehl entspricht...
+        person = message.mentions.members.first(); // ... wird nach einer Erwähnung eines Nutzers gesucht, derer dann...
+        message.channel.send(person); // ... der Zielnutzer entnommen wird.
+      } else { // Ansonsten...
+        person = message.member; // ... wird der Autor der Nachricht genommen.
       }
-      var rolesArray = person.roles.array();
+      var rolesArray = person.roles.array(); // Zur besseren Handhabung wird die Collection in ein Array übertragen
       var userRoles= [];
       for(i=0; i<rolesArray.length; i++) {
-        userRoles.push(rolesArray[i].name);
+        userRoles.push(rolesArray[i].name); // Selektieren der benötigten Infos: die Namen der Rollen
       }
       console.log(userRoles);
-      const rolesEmbed = new Discord.RichEmbed()
+      const rolesEmbed = new Discord.RichEmbed() // Einbettung
         .setColor(person.displayHexColor)
         .setTitle('Roles')
        	.setAuthor(person.user.username, person.user.avatarURL)
        	.setDescription(`<@${person.user.id}> has the following roles:`);
         for(j=0; j<userRoles.length;j++) {
      	    rolesEmbed.addField(userRoles[j], `${rolesArray[j]} with the ID: ${rolesArray[j].id}`);
-        }
+        } // Alle Rollen werden als Element der Einbettung dargestellt.
         rolesEmbed
         .setTimestamp()
         .setFooter(`Requested by ${message.member.user.tag}`, message.member.user.avatarURL);
