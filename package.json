@@ -1,0 +1,26 @@
+{
+  "name": "lilfreddy",
+  "version": "1.0.0",
+  "description": "LilFreddy",
+  "main": "index.js",
+  "dependencies": {
+    "discord.io": "^2.5.3",
+    "discord.js": "^11.4.2",
+    "mysql": "^2.16.0",
+    "node-opus": "^0.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fredoxon/LilFreddy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Fredoxon/LilFreddy/issues"
+  },
+  "homepage": "https://github.com/Fredoxon/LilFreddy#readme"
+}

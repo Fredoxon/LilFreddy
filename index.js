@@ -16,8 +16,8 @@ const connection = mysql.createConnection({
   user     : config.user,
   password : config.password,
   database : 'phpMyAdmin',
-  charset : 'utf8mb4'
-});
+  charset  : 'utf8mb4'
+}); 
 
 client.on("ready", () => {
   // Event, das startet, wenn der Bot sich erfolgreich eingeloggt hat
