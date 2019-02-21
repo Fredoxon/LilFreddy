@@ -12,7 +12,7 @@ const config = require("./config.json");
 const mysql = require('mysql');
 const connection = mysql.createConnection({
   host     : config.host,
-  port     : '11234',
+  port     : '3306',
   user     : config.user,
   password : config.password,
   database : 'phpMyAdmin',
@@ -49,10 +49,14 @@ client.on("message", async message => {
   // Bewirkt, dass der Bot nicht auf andere Bots antwortet (=> Verhindert Botception)
 
   xpGain = Math.floor(Math.random() * (xpRange + 1)) + parseInt(xpRangeStart, 10);
-  console.log(`${xpGain} ${xpRange} ${xpRangeStart}`)
+  console.log(`xpGain: ${xpGain}; xpRange: ${xpRange}; xpRangeStart ${xpRangeStart};`)
   // Willkür des tatsächlichen Erfahrungszuweisungsbetrags
-  //message.reply(xpGain);
-  mysql.Members.
+  message.channel.send(xpGain + " Experience Points to be added.");
+  /*connection.connect(err => {
+    if(err) throw err;
+    console.log("Connected to database!");
+    connection.query(`INSERT INTO Member (userID, experience) values (?, ?)`, [message.author.id, xpGain], console.log);
+  }); */ // Zugang verweigert auf jedem Port.
 
   if(!message.content.startsWith(config.prefix)) return;
   // Ignoriert alle Nachrichten, die nicht mit dem Prefix beginnen
@@ -60,7 +64,7 @@ client.on("message", async message => {
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   // Separiert den Befehl in Command und Argumente
-  console.log(`${args.length}`);
+  console.log(`amount args: ${args.length};`);
 
   if(command === "ping") {
     // Berechnet den Ping zwischen dem Senden und dem Bearbeiten einer Nachricht
@@ -91,6 +95,41 @@ client.on("message", async message => {
     const fetched = await message.channel.fetchMessages({limit: deleteCount});
     message.channel.bulkDelete(fetched)
       .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
+  }
+
+  if(command === "role") {
+    var person;
+    if(args[0] === "add") {
+      const role = message.guild.roles.find('name', `${args[3]}`);
+      console.log(args);
+      person = message.mentions.members.first();
+      person.addRole(role);
+    } else {
+      if(args[0]) {  
+        person = message.mentions.members.first();
+        message.channel.send(person);
+      } else {
+        person = message.member;
+      }
+      var rolesArray = person.roles.array();
+      var userRoles= [];
+      for(i=0; i<rolesArray.length; i++) {
+        userRoles.push(rolesArray[i].name);
+      }
+      console.log(userRoles);
+      const rolesEmbed = new Discord.RichEmbed()
+        .setColor(person.displayHexColor)
+        .setTitle('Roles')
+       	.setAuthor(person.user.username, person.user.avatarURL)
+       	.setDescription(`<@${person.user.id}> has the following roles:`);
+        for(j=0; j<userRoles.length;j++) {
+     	    rolesEmbed.addField(userRoles[j], `${rolesArray[j]} with the ID: ${rolesArray[j].id}`);
+        }
+        rolesEmbed
+        .setTimestamp()
+        .setFooter(`Requested by ${message.member.user.tag}`, message.member.user.avatarURL);
+      message.channel.send(rolesEmbed);
+    }
   }
 });
 
