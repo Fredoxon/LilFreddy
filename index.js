@@ -39,8 +39,8 @@ client.on("guildDelete", guild => {
   client.user.setActivity(`Serving ${client.guilds.size} servers`);
 });
 
-xpRangeStart = 50
-xpRange = 25
+xpRangeStart = 20
+xpRange = 10
 // Anfang und Länge des Erfahrungszuweisungsbetrags
 
 client.on("message", async message => {
@@ -73,12 +73,12 @@ client.on("message", async message => {
     m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
   }
   
-  if(command === "xpgain") {
-    xpRangeStart = args[0];
-    xpRange = args[1] - args[0];
-    xpEnd = parseInt(xpRange, 10) + parseInt(xpRangeStart, 10);
+  if(command === "xpgain") { // Ändern des Erfahrungszuweisungsbereiches
+    xpRangeStart = args[0]; // Anfang
+    xpRange = args[1] - args[0]; // Länge
+    xpEnd = args[1]; // Ende
     console.log(`${xpRangeStart} ${xpRange} ${xpEnd}`);
-    message.reply(`Experience Range set from ${xpRangeStart} to ${xpEnd}`);
+    message.reply(`Experience Range set from ${xpRangeStart} to ${xpEnd}`); // Bestätigung
   }
   
   if(command === "purge") {
