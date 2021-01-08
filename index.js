@@ -1,4 +1,4 @@
-// Laden der discord.js library
+// Laden der discord.js library...
 const Discord = require("discord.js");
 
 // Generieren des Clients
